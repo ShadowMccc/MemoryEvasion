@@ -13,12 +13,6 @@
 
 //#pragma comment(linker,"/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
 
-struct OrgInformation
-{
-    PBYTE orgFunc;
-    BYTE orgByte;
-};
-
 struct ustring {
     DWORD Length;
     DWORD MaximumLength;
