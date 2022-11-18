@@ -1,6 +1,6 @@
 # MemoryEvasion
 A Cobalt Strike memory evasion loader for redteamers,Support x86/x64 stager/stagerless payload with profile(tested on windows7/10,winserver 2012)
-## How To Evasion?
+## How Evasion?
 * Hook Sleep,CreateProcessA,CreateHeap,GetProcessHeap functions before the shellcode is loaded.
 * Create a new heap for beacon's profile. when beacon calls GetProcessHeap or CreateHeap functions,return the new heap's handle.
 * When beacon calls sleep function we encrypt memorys where beacon and profile are located,and when the sleep has finished we decrypt them.
