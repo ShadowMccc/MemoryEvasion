@@ -9,7 +9,10 @@ A Cobalt Strike memory evasion loader for redteamers,Support x86/x64 stager/stag
 * 64-bit beacon calls GetProcessHeap to get the memory to store beacon's profile.
 * 32-bit beacon dose not call GetProcessHeap to get the memory to store beacon's profile.It uses CreateHeap to create new heap and get the memory to store beacon's profile from that heap.
 
+## Demo
+![DEMO](demo.gif)
 
 ## References
-<p>This project would not have been possible without the following:</p>
-[LockdExeDemo](https://github.com/waldo-irc/LockdExeDemo)
+This project would not have been possible without the following:
+- [LockdExeDemo](https://github.com/waldo-irc/LockdExeDemo)
+- [ThreadStackSpoofer](https://github.com/mgeeky/ThreadStackSpoofer)
