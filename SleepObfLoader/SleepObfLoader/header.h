@@ -3,6 +3,7 @@
 #include <intrin.h>
 #include <tlhelp32.h>
 #include <vector>
+#include <bcrypt.h>
 #include "Shellcode.h"
 #include "minhook/MinHook.h"
 
@@ -12,6 +13,7 @@
 #pragma comment(lib,"minhook/minhook.x86.lib")
 #endif
 
+#pragma comment(lib,"bcrypt.lib")
 //#pragma comment(linker,"/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
 
 struct ustring {

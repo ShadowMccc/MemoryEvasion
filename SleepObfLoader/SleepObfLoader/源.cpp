@@ -34,12 +34,7 @@ int main()
 
 VOID RandomGen()
 {
-    HCRYPTPROV hCryptProv;
-    BYTE TmpKey[16] = { 0x11,0x02,0xbb,0xab,0x12,0x03,0x08,0x5c,0x11,0x02,0xbb,0xab,0x12,0x03,0x08,0x5c };
-
-    memcpy(g_EncryptKey, TmpKey, 16);
-    CryptAcquireContextA(&hCryptProv, NULL, NULL, PROV_RSA_FULL, 0);
-    CryptGenRandom(hCryptProv, 16, g_EncryptKey);
+    BCryptGenRandom(NULL, g_EncryptKey, 16, BCRYPT_USE_SYSTEM_PREFERRED_RNG);
 
     g_key.Buffer = g_EncryptKey;
     g_key.Length = 16;
@@ -49,8 +44,6 @@ VOID RandomGen()
         printf("%x", g_key.Buffer[i]);
     }
     printf("\n");
-
-    CryptReleaseContext(hCryptProv, 0);
 }
 
 VOID HeapEncrypt() {
