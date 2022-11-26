@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <intrin.h>
 #include <tlhelp32.h>
+#include <stdio.h>
 #include "Shellcode.h"
 #include "minhook/MinHook.h"
 
